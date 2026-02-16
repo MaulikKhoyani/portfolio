@@ -32,7 +32,7 @@ export function About() {
                         className="space-y-6"
                     >
                         <h3 className="text-2xl font-semibold">
-                            BSc.IT Graduate (2025) with Production Experience
+                            Specializing in High-Performance Apps & User-Centric Design
                         </h3>
                         <p className="text-muted-foreground leading-relaxed">
                             I specialize in building cross-platform mobile apps using Flutter. My expertise extends from crafting pixel-perfect UIs to integrating complex backends with Firebase and REST APIs.
