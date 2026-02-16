@@ -34,8 +34,8 @@ export function Navbar() {
         <header
             className={cn(
                 "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-                scrolled
-                    ? "bg-background/80 backdrop-blur-md border-b border-border py-2 shadow-sm"
+                (scrolled || isOpen)
+                    ? "bg-background/95 backdrop-blur-md border-b border-border py-2 shadow-sm"
                     : "bg-transparent py-4"
             )}
         >
@@ -84,20 +84,20 @@ export function Navbar() {
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}
-                        className="md:hidden bg-background border-b border-border overflow-hidden"
+                        className="md:hidden bg-background border-b border-border overflow-hidden shadow-xl"
                     >
-                        <nav className="flex flex-col gap-4 p-6 container mx-auto">
+                        <nav className="flex flex-col gap-2 p-6 container mx-auto">
                             {navLinks.map((link) => (
                                 <Link
                                     key={link.href}
                                     href={link.href}
-                                    className="text-lg font-medium hover:text-primary transition-colors py-2 border-b border-border/50 last:border-0"
+                                    className="text-lg font-medium hover:text-primary transition-all py-3 border-b border-border/10 last:border-0 hover:pl-2"
                                     onClick={() => setIsOpen(false)}
                                 >
                                     {link.label}
                                 </Link>
                             ))}
-                            <Button asChild className="w-full mt-4 rounded-full">
+                            <Button asChild className="w-full mt-6 rounded-full bg-gradient-to-r from-cyan-500 to-purple-600 border-0 text-white font-semibold">
                                 <Link href="#contact" onClick={() => setIsOpen(false)}>
                                     Hire Me
                                 </Link>
