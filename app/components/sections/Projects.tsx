@@ -1,11 +1,9 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { ExternalLink, Github } from "lucide-react"
 import Link from "next/link"
 
-import { Button } from "@/app/components/ui/Button"
-import { Card, CardContent, CardFooter, CardHeader } from "@/app/components/ui/Card"
+import { Card, CardContent, CardHeader } from "@/app/components/ui/Card"
 import { Container, Section } from "@/app/components/ui/Section"
 
 const projects = [
@@ -72,44 +70,36 @@ export function Projects() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
+                            whileHover={{ y: -8, scale: 1.02 }}
                         >
-                            <Card className="h-full flex flex-col overflow-hidden group hover:border-primary/50 cursor-default">
+                            <Card className="h-full flex flex-col overflow-hidden group hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 cursor-default">
                                 <CardHeader>
                                     <div className="flex justify-between items-start">
-                                        <h3 className="text-xl font-bold group-hover:text-primary transition-colors">
+                                        <motion.h3
+                                            className="text-xl font-bold group-hover:text-primary transition-colors"
+                                            whileHover={{ x: 5 }}
+                                        >
                                             {project.title}
-                                        </h3>
+                                        </motion.h3>
                                     </div>
                                     <div className="flex flex-wrap gap-2 mt-2">
-                                        {project.tags.map((tag) => (
-                                            <span
+                                        {project.tags.map((tag, tagIndex) => (
+                                            <motion.span
                                                 key={tag}
-                                                className="px-2 py-1 bg-secondary text-secondary-foreground text-xs rounded-md font-medium"
+                                                initial={{ opacity: 0, scale: 0.8 }}
+                                                whileInView={{ opacity: 1, scale: 1 }}
+                                                viewport={{ once: true }}
+                                                transition={{ duration: 0.3, delay: index * 0.1 + tagIndex * 0.05 }}
+                                                className="px-2 py-1 bg-secondary text-secondary-foreground text-xs rounded-md font-medium hover:bg-primary/10 hover:text-primary transition-colors"
                                             >
                                                 {tag}
-                                            </span>
+                                            </motion.span>
                                         ))}
                                     </div>
                                 </CardHeader>
-                                <CardContent className="flex-grow">
+                                <CardContent className="pb-8">
                                     <p className="text-muted-foreground">{project.description}</p>
                                 </CardContent>
-                                <CardFooter className="gap-4">
-                                    {project.links.github && (
-                                        <Button asChild variant="outline" size="sm">
-                                            <Link href={project.links.github} target="_blank" rel="noopener noreferrer">
-                                                <Github className="w-4 h-4 mr-2" /> Code
-                                            </Link>
-                                        </Button>
-                                    )}
-                                    {project.links.live && (
-                                        <Button asChild size="sm">
-                                            <Link href={project.links.live} target="_blank" rel="noopener noreferrer">
-                                                <ExternalLink className="w-4 h-4 mr-2" /> Live Demo
-                                            </Link>
-                                        </Button>
-                                    )}
-                                </CardFooter>
                             </Card>
                         </motion.div>
                     ))}

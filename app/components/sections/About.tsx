@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import { Code, Database, Layout, Smartphone } from "lucide-react"
+import Image from "next/image"
 
 import { Container, Section } from "@/app/components/ui/Section"
 
@@ -67,18 +68,31 @@ export function About() {
                         transition={{ duration: 0.5, delay: 0.4 }}
                         className="relative"
                     >
-                        <div className="aspect-square rounded-2xl bg-gradient-to-br from-primary/20 to-purple-500/20 flex items-center justify-center p-8">
-                            {/* Placeholder for actual image or a nice graphic */}
-                            <div className="text-center space-y-4">
-                                <div className="w-24 h-24 bg-primary/20 rounded-full mx-auto flex items-center justify-center">
-                                    <Code className="w-10 h-10 text-primary" />
+                        <motion.div
+                            className="relative aspect-square rounded-2xl overflow-hidden"
+                            animate={{
+                                y: [0, -10, 0],
+                            }}
+                            transition={{
+                                duration: 3,
+                                repeat: Infinity,
+                                ease: "easeInOut"
+                            }}
+                        >
+                            {/* Gradient border effect */}
+                            <div className="absolute inset-0 bg-gradient-to-br from-cyan-400 via-purple-500 to-pink-500 p-1 rounded-2xl">
+                                <div className="w-full h-full bg-background rounded-2xl overflow-hidden">
+                                    <Image
+                                        src="/portfolio/1770192747797.jpeg"
+                                        alt="Maulik Khoyani - Flutter Developer"
+                                        width={500}
+                                        height={500}
+                                        className="w-full h-full object-cover"
+                                        priority
+                                    />
                                 </div>
-                                <h4 className="text-xl font-bold">Problem Solver</h4>
-                                <p className="text-sm text-muted-foreground">
-                                    Dedicated to writing clean, maintainable, and efficient code.
-                                </p>
                             </div>
-                        </div>
+                        </motion.div>
                     </motion.div>
                 </div>
             </Container>

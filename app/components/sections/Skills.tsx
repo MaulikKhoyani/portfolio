@@ -52,23 +52,33 @@ export function Skills() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
+                            whileHover={{ scale: 1.02, y: -5 }}
                         >
-                            <Card className="h-full bg-card/50 backdrop-blur border-primary/10 hover:border-primary/30 transition-all">
+                            <Card className="h-full bg-card/50 backdrop-blur border-primary/10 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300">
                                 <CardHeader className="flex flex-row items-center gap-4 pb-2">
-                                    <div className="p-2 rounded-lg bg-secondary">
+                                    <motion.div
+                                        className="p-2 rounded-lg bg-secondary"
+                                        whileHover={{ scale: 1.1, rotate: 5 }}
+                                        transition={{ type: "spring", stiffness: 300 }}
+                                    >
                                         {category.icon}
-                                    </div>
+                                    </motion.div>
                                     <CardTitle className="text-lg md:text-xl font-bold">{category.title}</CardTitle>
                                 </CardHeader>
                                 <CardContent>
                                     <div className="flex flex-wrap gap-2 pt-2">
-                                        {category.skills.map((skill) => (
-                                            <span
+                                        {category.skills.map((skill, skillIndex) => (
+                                            <motion.span
                                                 key={skill}
-                                                className="px-3 py-1.5 bg-secondary/50 border border-border rounded-md text-sm font-medium text-muted-foreground hover:text-foreground hover:border-primary/50 transition-colors"
+                                                initial={{ opacity: 0, scale: 0.8 }}
+                                                whileInView={{ opacity: 1, scale: 1 }}
+                                                viewport={{ once: true }}
+                                                transition={{ duration: 0.3, delay: index * 0.1 + skillIndex * 0.05 }}
+                                                whileHover={{ scale: 1.05, y: -2 }}
+                                                className="px-3 py-1.5 bg-secondary/50 border border-border rounded-md text-sm font-medium text-muted-foreground hover:text-foreground hover:border-primary/50 hover:bg-primary/5 hover:shadow-md hover:shadow-primary/20 transition-all duration-200 cursor-default"
                                             >
                                                 {skill}
-                                            </span>
+                                            </motion.span>
                                         ))}
                                     </div>
                                 </CardContent>

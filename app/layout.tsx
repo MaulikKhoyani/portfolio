@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "./components/layout/ThemeProvider";
 import { Navbar } from "./components/layout/Navbar";
 import { Footer } from "./components/layout/Footer";
+import { CursorTrail } from "./components/ui/CursorTrail";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -20,6 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} font-sans antialiased`}>
+        <CursorTrail />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

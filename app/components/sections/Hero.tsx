@@ -31,7 +31,7 @@ export function Hero() {
                     </div>
 
                     <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight">
-                        Hi, I&apos;m <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-500 to-cyan-500">Maulik Khoyani</span>
+                        Hi, I&apos;m <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400">Maulik Khoyani</span>
                     </h1>
                     <p className="text-xl md:text-2xl font-medium text-muted-foreground">
                         Flutter Developer & UI/UX Designer
@@ -48,14 +48,15 @@ export function Hero() {
                     transition={{ duration: 0.5, delay: 0.2 }}
                     className="flex flex-wrap items-center justify-center gap-4"
                 >
-                    <Button asChild size="lg" className="rounded-full bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 border-0">
-                        <Link href="#contact">
-                            Get in Touch <ArrowRight className="ml-2 w-4 h-4" />
+                    <Button asChild size="lg" className="rounded-full bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-purple-600 hover:to-pink-600 border-0 text-white font-semibold shadow-lg hover:shadow-xl transition-all">
+                        <Link href="#contact" className="flex items-center gap-2">
+                            <span>Get in Touch</span>
+                            <ArrowRight className="w-4 h-4" />
                         </Link>
                     </Button>
-                    <Button asChild variant="outline" size="lg" className="rounded-full border-primary/20 hover:bg-primary/5">
-                        <Link href="#projects">
-                            View Projects
+                    <Button asChild variant="outline" size="lg" className="rounded-full border-2 border-cyan-400/50 hover:border-cyan-400 hover:bg-cyan-400/10 transition-all">
+                        <Link href="#projects" className="flex items-center gap-2">
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 font-semibold">View Projects</span>
                         </Link>
                     </Button>
                 </motion.div>
@@ -66,8 +67,8 @@ export function Hero() {
                     transition={{ duration: 0.5, delay: 0.4 }}
                     className="flex items-center gap-6 mt-8"
                 >
-                    <SocialLink href="https://github.com" icon={<Github className="w-5 h-5" />} label="GitHub" />
-                    <SocialLink href="https://linkedin.com" icon={<Linkedin className="w-5 h-5" />} label="LinkedIn" />
+                    <SocialLink href="https://github.com/MaulikKhoyani" icon={<Github className="w-5 h-5" />} label="GitHub" />
+                    <SocialLink href="https://www.linkedin.com/in/maulik-khoyani-64369128b" icon={<Linkedin className="w-5 h-5" />} label="LinkedIn" />
                     <SocialLink href="mailto:maulik.freelancing1010@gmail.com" icon={<Mail className="w-5 h-5" />} label="Email" />
                 </motion.div>
             </Container>

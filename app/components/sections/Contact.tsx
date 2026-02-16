@@ -12,11 +12,53 @@ import { Container, Section } from "@/app/components/ui/Section"
 import { Textarea } from "@/app/components/ui/Textarea"
 
 export function Contact() {
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const [isSubmitted, setIsSubmitted] = React.useState(false)
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        // Placeholder for form submission
-        alert("Thank you for your message! This is a demo form.")
+        const form = e.currentTarget
+        const formData = new FormData(form)
+
+        try {
+            const response = await fetch("https://formspree.io/f/mzdagpgj", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                setIsSubmitted(true)
+                form.reset()
+                // Reset success message after 5 seconds
+                setTimeout(() => setIsSubmitted(false), 5000)
+            } else {
+                alert("Oops! There was a problem submitting your form. Please try again.")
+            }
+        } catch (error) {
+            alert("Oops! There was a problem submitting your form. Please try again.")
+        }
     }
+
+    const contactLinks = [
+        {
+            title: "Email Me",
+            value: "maulik.freelancing1010@gmail.com",
+            href: "mailto:maulik.freelancing1010@gmail.com",
+            icon: Mail,
+            color: "text-primary",
+            bg: "bg-primary/10",
+        },
+        {
+            title: "WhatsApp",
+            value: "+91 9773279892",
+            href: "https://wa.me/919773279892",
+            icon: MessageSquare,
+            color: "text-green-500",
+            bg: "bg-green-500/10",
+        },
+    ]
 
     return (
         <Section id="contact">
@@ -42,38 +84,29 @@ export function Contact() {
                         transition={{ duration: 0.5, delay: 0.2 }}
                         className="space-y-6"
                     >
-                        <Card>
-                            <CardContent className="p-6 flex items-center gap-4">
-                                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary">
-                                    <Mail className="w-6 h-6" />
-                                </div>
-                                <div>
-                                    <h4 className="font-bold">Email Me</h4>
-                                    <a href="mailto:maulik.freelancing1010@gmail.com" className="text-muted-foreground hover:text-primary transition-colors">
-                                        maulik.freelancing1010@gmail.com
-                                    </a>
-                                </div>
-                            </CardContent>
-                        </Card>
-
-                        <Card>
-                            <CardContent className="p-6 flex items-center gap-4">
-                                <div className="w-12 h-12 bg-green-500/10 rounded-full flex items-center justify-center text-green-600">
-                                    <MessageSquare className="w-6 h-6" />
-                                </div>
-                                <div>
-                                    <h4 className="font-bold">WhatsApp</h4>
-                                    <a
-                                        href="https://wa.me/1234567890" // Placeholder number
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="text-muted-foreground hover:text-green-600 transition-colors"
-                                    >
-                                        Quick Chat on WhatsApp
-                                    </a>
-                                </div>
-                            </CardContent>
-                        </Card>
+                        {contactLinks.map((link, index) => (
+                            <motion.a
+                                key={link.title}
+                                href={link.href}
+                                target={link.href.startsWith("http") ? "_blank" : undefined}
+                                rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                                whileHover={{ scale: 1.02, y: -2 }}
+                                whileTap={{ scale: 0.98 }}
+                                className="block"
+                            >
+                                <Card className="hover:border-primary/50 transition-all duration-300">
+                                    <CardContent className="p-6 flex items-center gap-4">
+                                        <div className={`w-12 h-12 ${link.bg} rounded-full flex items-center justify-center ${link.color}`}>
+                                            <link.icon className="w-6 h-6" />
+                                        </div>
+                                        <div>
+                                            <h4 className="font-bold">{link.title}</h4>
+                                            <p className="text-muted-foreground">{link.value}</p>
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            </motion.a>
+                        ))}
 
                         <div className="p-6 bg-secondary/50 rounded-xl border border-secondary">
                             <h4 className="font-bold mb-2">Available for Freelance</h4>
@@ -94,34 +127,54 @@ export function Contact() {
                                 <CardTitle>Send a Message</CardTitle>
                             </CardHeader>
                             <CardContent>
-                                <form onSubmit={handleSubmit} className="space-y-4">
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <div className="space-y-2">
-                                            <label htmlFor="name" className="text-sm font-medium">Name</label>
-                                            <Input id="name" placeholder="John Doe" required />
+                                {isSubmitted ? (
+                                    <motion.div
+                                        initial={{ opacity: 0, scale: 0.9 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        className="bg-primary/10 border border-primary/20 p-8 rounded-xl text-center space-y-4"
+                                    >
+                                        <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto text-primary">
+                                            <Send className="w-8 h-8" />
+                                        </div>
+                                        <h3 className="text-xl font-bold">Message Sent!</h3>
+                                        <p className="text-muted-foreground text-sm">
+                                            Thank you for reaching out. I&apos;ll get back to you soon at maulik.freelancing1010@gmail.com.
+                                        </p>
+                                    </motion.div>
+                                ) : (
+                                    <form onSubmit={handleSubmit} className="space-y-4">
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div className="space-y-2">
+                                                <label htmlFor="name" className="text-sm font-medium">Name</label>
+                                                <Input name="name" id="name" placeholder="John Doe" required />
+                                            </div>
+                                            <div className="space-y-2">
+                                                <label htmlFor="email" className="text-sm font-medium">Email</label>
+                                                <Input name="email" id="email" type="email" placeholder="john@example.com" required />
+                                            </div>
                                         </div>
                                         <div className="space-y-2">
-                                            <label htmlFor="email" className="text-sm font-medium">Email</label>
-                                            <Input id="email" type="email" placeholder="john@example.com" required />
+                                            <label htmlFor="subject" className="text-sm font-medium">Subject</label>
+                                            <Input name="subject" id="subject" placeholder="Project Inquiry" required />
                                         </div>
-                                    </div>
-                                    <div className="space-y-2">
-                                        <label htmlFor="subject" className="text-sm font-medium">Subject</label>
-                                        <Input id="subject" placeholder="Project Inquiry" required />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <label htmlFor="message" className="text-sm font-medium">Message</label>
-                                        <Textarea
-                                            id="message"
-                                            placeholder="Tell me about your project..."
-                                            className="min-h-[150px]"
-                                            required
-                                        />
-                                    </div>
-                                    <Button type="submit" className="w-full">
-                                        Send Message <Send className="w-4 h-4 ml-2" />
-                                    </Button>
-                                </form>
+                                        <div className="space-y-2">
+                                            <label htmlFor="message" className="text-sm font-medium">Message</label>
+                                            <Textarea
+                                                name="message"
+                                                id="message"
+                                                placeholder="Tell me about your project..."
+                                                className="min-h-[150px]"
+                                                required
+                                            />
+                                        </div>
+                                        <Button
+                                            type="submit"
+                                            className="w-full bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-purple-600 hover:to-pink-600 font-bold"
+                                        >
+                                            Send Message <Send className="w-4 h-4 ml-2" />
+                                        </Button>
+                                    </form>
+                                )}
                             </CardContent>
                         </Card>
                     </motion.div>
